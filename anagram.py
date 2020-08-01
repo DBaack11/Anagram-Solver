@@ -1,5 +1,14 @@
 import tkinter as tk
 from tkinter import messagebox
+from datetime import datetime
+
+root = tk.Tk()
+entry = tk.StringVar()
+
+
+# Custom exception utilized for verifying valid input
+class InvalidInputException(Exception):
+    pass
 
 # Function that clears the entry box, anagrams text box, and results label.
 def clear_click():
