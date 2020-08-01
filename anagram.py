@@ -43,7 +43,8 @@ def solve_click():
         if not entry_word.isalpha():
             raise InvalidInputException
     except InvalidInputException:
-        messagebox.showinfo("Invalid Input", "Please enter an alphabetic word.")
+        messagebox.showinfo("Invalid Input", "Please enter a single alphabetic word. \n"
+                                             "                      (No Spaces)")
         word.delete(0, tk.END)
 
     for line in dictionary:
