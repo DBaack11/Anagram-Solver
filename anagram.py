@@ -1,6 +1,12 @@
 import tkinter as tk
 from tkinter import messagebox
 
+# Function that clears the entry box, anagrams text box, and results label.
+def clear_click():
+    anagrams.delete('1.0', tk.END)
+    word.delete(0, tk.END)
+    results.config(text="Results In:")
+
 # Code for the design of the GUI below
 root.title("Anagram Solver")
 root.geometry('600x250')
