@@ -10,6 +10,33 @@ entry = tk.StringVar()
 class InvalidInputException(Exception):
     pass
 
+# Function that, when called through button click, retrieves string from entry box, checks if
+# it is a valid input, and displays all anagrams on the text box.
+# Utilizing datetime calculations, this function times the anagram algorithm and displays the result.
+def solve_click():
+    start = datetime.now()
+    entry_word = entry.get().lower()
+    dictionary = open("english3.txt").read().splitlines()
+
+    try:
+        if not entry_word.isalpha():
+            raise InvalidInputException
+    except InvalidInputException:
+        messagebox.showinfo("Invalid Input", "Please enter an alphabetic word.")
+        word.delete(0, tk.END)
+
+    for line in dictionary:
+        if sorted(line) == sorted(entry_word):
+            anagrams.insert(tk.END, line + '\n')
+            anagrams.tag_add("center", "1.0", "end")
+
+    end = datetime.now()
+    calculation = round(float((str(end - start)).replace("0:00:0", '')), 3)
+
+    if len(entry_word) != 0:
+        results.config(text=f"Results In: {calculation} seconds")
+
+
 # Function that clears the entry box, anagrams text box, and results label.
 def clear_click():
     anagrams.delete('1.0', tk.END)
