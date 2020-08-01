@@ -1,3 +1,23 @@
+"""
+Author: Devin Baack
+Program: anagram.py
+Date Modified: 08/01/2020
+
+This program utilizes multiple components of the Python programming language and topics covered
+in CIS 179 to create a GUI that accepts a single word string input and, after a button click,
+lists all of the same-length anagrams of the word, provided by parsing through an
+official dictionary file.
+"""
+
+# ############## Try These Examples ############## #
+# *     coder         edit          sonic        * #
+# *     post          name          boredom      * #
+# *     resort        last          letters      * #
+# *     leap          protein       printer      * #
+# *     earth         dancer        pear         * #
+# *     spider        medical       oracle       * #
+# ################################################ #
+
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
@@ -9,6 +29,7 @@ entry = tk.StringVar()
 # Custom exception utilized for verifying valid input
 class InvalidInputException(Exception):
     pass
+
 
 # Function that, when called through button click, retrieves string from entry box, checks if
 # it is a valid input, and displays all anagrams on the text box.
@@ -43,6 +64,7 @@ def clear_click():
     word.delete(0, tk.END)
     results.config(text="Results In:")
 
+    
 # Code for the design of the GUI below
 root.title("Anagram Solver")
 root.geometry('600x250')
