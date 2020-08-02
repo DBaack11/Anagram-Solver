@@ -38,7 +38,8 @@ def solve_click():
     start = datetime.now()
     entry_word = entry.get().lower()
     dictionary = open("english3.txt").read().splitlines()
-
+    error = False
+    
     try:
         if not entry_word.isalpha():
             raise InvalidInputException
@@ -46,24 +47,30 @@ def solve_click():
         messagebox.showinfo("Invalid Input", "Please enter a single alphabetic word. \n"
                                              "                      (No Spaces)")
         word.delete(0, tk.END)
+        error = True
 
     for line in dictionary:
         if sorted(line) == sorted(entry_word):
             anagrams.insert(tk.END, line + '\n')
             anagrams.tag_add("center", "1.0", "end")
+    if anagrams.get("1.0", tk.END) == "\n" and not error:
+        messagebox.showinfo("Invalid Input", "Please enter a single alphabetic word. \n"
+                                             "       (Word not found in dictionary)")
+
 
     end = datetime.now()
     calculation = round(float((str(end - start)).replace("0:00:0", '')), 3)
 
-    if len(entry_word) != 0:
+    if len(entry_word) != 0 and anagrams.get("1.0", tk.END) != "\n":
         results.config(text=f"Results In: {calculation} seconds")
 
 
 # Function that clears the entry box, anagrams text box, and results label.
 def clear_click():
-    anagrams.delete('1.0', tk.END)
-    word.delete(0, tk.END)
-    results.config(text="Results In:")
+    if len(word.get()) != 0:
+        anagrams.delete('1.0', tk.END)
+        word.delete(0, tk.END)
+        results.config(text="Results In:")
 
     
 # Code for the design of the GUI below
@@ -71,25 +78,32 @@ root.title("Anagram Solver")
 root.geometry('600x250')
 
 # GUI Frames
-left_frame = tk.Frame(master=root, bg="gray")
+left_frame = tk.Frame(master=root)
+left_frame['background'] = '#005c61'
 left_frame.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 divider = tk.Frame(master=root, width=5)
 divider.pack(fill=tk.Y, side=tk.LEFT)
-right_frame = tk.Frame(master=root, bg="gray")
+right_frame = tk.Frame(master=root)
+right_frame['background'] = '#005c61'
 right_frame.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
 # GUI Labels
-left_frame_label = tk.Label(left_frame, text="Enter a Word", fg="white", bg="gray", font=("Ubuntu", 40, "bold"))
+left_frame_label = tk.Label(left_frame, text="Enter a Word", fg="white", font=("Ubuntu", 40, "bold"))
+left_frame_label['background'] = '#005c61'
 left_frame_label.pack(side=tk.TOP)
-right_frame_label = tk.Label(right_frame, text="Anagrams", fg="white", bg="gray", font=("Ubuntu", 20, "bold"))
+right_frame_label = tk.Label(right_frame, text="Anagrams", fg="white", font=("Ubuntu", 20, "bold"))
+right_frame_label['background'] = '#005c61'
 right_frame_label.pack(side=tk.TOP)
-results = tk.Label(right_frame, text="Results In: ", fg="white", bg="gray", font=("Ubuntu", 15, "bold"))
+results = tk.Label(right_frame, text="Results In: ", fg="white", font=("Ubuntu", 15, "bold"))
+results['background'] = '#005c61'
 results.pack(side=tk.BOTTOM)
 
 # Entry and Text boxes
-word = tk.Entry(left_frame, textvariable=entry, fg="white", bg="gray", font=("Ubuntu", 15, "bold"), justify="center")
+word = tk.Entry(left_frame, textvariable=entry, fg="white", font=("Ubuntu", 15, "bold"), justify="center")
+word['background'] = '#b2b2b2'
 word.pack(pady=10)
-anagrams = tk.Text(right_frame, fg="white", bg="gray", font=("Ubuntu", 30, "bold"))
+anagrams = tk.Text(right_frame, fg="white", font=("Ubuntu", 30, "bold"))
+anagrams['background'] = '#b2b2b2'
 anagrams.tag_configure("center", justify="center")
 anagrams.pack(fill=tk.BOTH, padx=10, pady=10, expand=True)
 
